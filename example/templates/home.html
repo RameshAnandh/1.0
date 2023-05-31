@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenAI API</title>
+    <meta charset="UTF-8" />
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/bootstrap-responsive.min.css' %}" />
+<!--    <link rel="stylesheet" href="{% static '/css/matrix-login.css' %}" />-->
+    <link href="{% static '/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+<!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>-->
+</head>
+<body onload="onload()" id="body">
+<h1>Intelligent Image Generator</h1>
+    <form id="loginform">
+        <table>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <input type="radio" id="radioPrompt" name="radioTypeOfQuery" value="Prompt" onclick="variationClick(this);" checked>
+                    <label for="radioPrompt">Prompt</label>
+                    <input type="radio" id="radiovariation" name="radioTypeOfQuery" value="Variation" onclick="variationClick(this);">
+                    <label for="radiovariation">Variation</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Query: </p>
+                </td>
+                <td>
+                    <input type="text" id="txtInput" name="txtInput"><br><br>
+                    <div id="divsaveVariation">
+                        <input type="checkbox" id="chksaveVariation" name="chksaveVariation" value="saveVariation" checked>
+                        <label for="chksaveVariation"> Save Variation as new file</label><br>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     <label for="noofOutput"> Number of Outputs to generate</label><br>
+                </td>
+                <td>
+                    <select name="noofOutput" id="noofOutput">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="radioImageSize"> Resolution size</label><br>
+                </td>
+                <td>
+                    <input type="radio" id="radio256" name="radioImageSize" value="256x256" checked>
+                    <label for="radio2">256x256</label>
+                    <input type="radio" id="radio512" name="radioImageSize" value="512x512">
+                    <label for="radio2">512x512</label>
+                    <input type="radio" id="radio1024" name="radioImageSize" value="1024x1024">
+                    <label for="radio2">1024x1024</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <progress id="progress-bar" aria-label="Content loading…"></progress>
+                </td>
+                <td>
+                    <div class="form-actions">
+                    <span class="pull-right"><a type="submit" id="loginlink" onclick="submit()" class="btn btn-success">Send Query</a></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+<!--    <img src="" alt="Flowers in Chania">-->
+<script src="/static/assets/libs/jquery/dist/jquery.min.js"></script>
+<script>
+        function variationClick(myRadio) {
+              var x = document.getElementById("divsaveVariation");
+              var queryType = document.querySelector('input[name="radioTypeOfQuery"]:checked').defaultValue;
+              if(queryType=='Variation')
+              {
+                  if (x.style.display === "none") {
+                    x.style.display = "block";
+                  }
+              }
+              else {
+                    x.style.display = "none";
+              }
+        }
+        function onload(){
+            //const img = document.querySelector("img");
+            const pb=document.querySelector("#progress-bar");
+            var x = document.getElementById("divsaveVariation");
+            x.style.display = "none";
+
+            //if(img.style.visibility == ""){
+            //    img.style.visibility = "hidden";
+            //}
+            if(pb.style.visibility == ""){
+                pb.style.visibility = "hidden";
+            }
+        };
+        function submit(){
+            var imageSize = document.querySelector('input[name="radioImageSize"]:checked').defaultValue;
+            var queryType = document.querySelector('input[name="radioTypeOfQuery"]:checked').defaultValue;
+            var saveVariation=document.querySelector('input[name="radioTypeOfQuery"]:checked').defaultValue;
+            var e_noofOutput = document.getElementById("noofOutput");
+            var noofOutput = e_noofOutput.value;
+
+            if(document.querySelector('input[name="chksaveVariation"]:checked')!=null){
+                saveVariation = document.querySelector('input[name="chksaveVariation"]:checked').defaultValue;
+            }
+            const pb=document.querySelector("#progress-bar");
+            if(pb.style.visibility == "hidden"){
+            pb.style.visibility = "visible";
+            }
+            //const img = document.querySelector("img");
+            //if(img.style.visibility == "visible"){
+            //img.style.visibility = "hidden";
+            //}
+            $.ajax({
+                type:'POST',
+                url:'/chat_gpt_functions/',
+                data:{
+                imageQuery:$('#txtInput').val(),
+                imageSize:imageSize,
+                queryType:queryType,
+                saveVariation:saveVariation,
+                noofOutput:noofOutput,
+                },
+                success:function(data){
+                    if(data.error_message!='' && data.data===undefined){
+                        alert(data.error_message);
+                        document.getElementById("txtInput").focus();
+                        const pb=document.querySelector("#progress-bar");
+                        if(pb.style.visibility == "visible"){
+                        pb.style.visibility = "hidden";
+                        }
+                    }
+                    else{
+                        if(document.getElementsByTagName("img").length>0){
+                        var totalIter=document.getElementsByTagName("img").length;
+                            for(iRemoveImg=0;iRemoveImg<totalIter;iRemoveImg++){
+                                var image_x = document.getElementsByTagName('img')[0];
+                                image_x.parentNode.removeChild(image_x);
+                            }
+                        }
+                        if(data.data.length>0){
+                            for(i=0;i<data.data.length;i++){
+                                var img = document.createElement('img');
+                                img.src =data.data[i].url;
+                                document.getElementById('body').appendChild(img);
+                            }
+                        }
+
+                        //var url = data.data[0].url;
+                        //const img = document.querySelector("img");
+                        //img.src = url;
+                        //if(img.style.visibility != "visible"){
+                        //img.style.visibility = "visible";
+                        //}
+                        const pb=document.querySelector("#progress-bar");
+                        if(pb.style.visibility == "visible"){
+                        pb.style.visibility = "hidden";
+                        }
+                    }
+                },
+                error: function (jqXHR, exception) {
+                console.log(jqXHR);
+                }
+            });
+        }
+</script>
+</body>
+</html>
