@@ -14,7 +14,7 @@ from example.models import DBTEST_MODEL
 #import numpy as np
 #from matplotlib import pyplot as plt
 
-import openai
+#import openai
 
 import requests
 
@@ -39,16 +39,16 @@ def login_auth(request):
     name = request.POST['name']
     Mobile = request.POST['Mobile']
     try:
-      results = custom_sql('default',"SELECT 1 FROM `dbtest`.`tblRegister` WHERE name = '"+name+"' AND Mobile ="+Mobile+";")
-      if len(results) >0:#data_to_send = results[0].get("1")
-        return redirect('/example/')
+      results = custom_sql('default',"SELECT 1 FROM tblLogin WHERE txtuname = '"+name+"' AND txtpwd ='"+Mobile+"';")
+      if len(results) >0:
+        data['msg']='Success'
       else:
         raise Exception("No Such user!")
     except Exception as e:
-      data['error_message'] = str(e)
-      # return JsonResponse(data)
+      data['msg'] = str(e)
+    return JsonResponse(data)
 
-@csrf_exempt
+"""@csrf_exempt
 def chat_gpt_functions(request):
   data = {}
   if request.method == "POST":
@@ -117,3 +117,4 @@ def chat_gpt_functions(request):
     except Exception as e:
       data['error_message'] = str(e)
       return JsonResponse(data)
+"""
