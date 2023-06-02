@@ -10,15 +10,15 @@ from utils import custom_sql, custom_procedure, movecol, custom_procedure_multip
 
 from example.models import DBTEST_MODEL
 
-import cv2
-import numpy as np
-from matplotlib import pyplot as plt
+#import cv2
+#import numpy as np
+#from matplotlib import pyplot as plt
 
 import openai
 
 import requests
 
-import tinify
+#import tinify
 
 def example(request):
   template = loader.get_template('home.html')
