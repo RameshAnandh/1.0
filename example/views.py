@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 #from datatable.views import ServerSideDatatableViewSPP
 
-#from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results
+from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results
 
 from example.models import DBTEST_MODEL
 
