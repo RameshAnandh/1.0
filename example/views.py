@@ -26,7 +26,17 @@ def example(request):
 
 def login(request):
   template = loader.get_template('Login.html')
-  return HttpResponse(template.render())
+  context = {
+    'title': 'Mano Driving School',
+  }
+  return HttpResponse(template.render(context,request))
+
+def contact(request):
+  template = loader.get_template('contact.html')
+  context = {
+    'title': 'Mano Driving School',
+  }
+  return HttpResponse(template.render(context,request))
 
 def EmpMaster(request):
   template = loader.get_template('EmployeeMaster.html')

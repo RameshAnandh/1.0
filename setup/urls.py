@@ -23,5 +23,6 @@ urlpatterns = [
     # path('chat_gpt_functions/', chat_gpt_functions,name='chat_gpt_functions'),
     path('login/', login,name='login'),
     path('login_auth/', login_auth,name='login_auth'),
+    path('contact/', contact,name='contact'),
     # path('EmpMaster/', EmpMaster,name='EmpMaster'),
 ]
