@@ -24,5 +24,6 @@ urlpatterns = [
     path('login/', login,name='login'),
     path('login_auth/', login_auth,name='login_auth'),
     path('contact/', contact,name='contact'),
+    path('post_query/', post_query,name='post_query'),
     # path('EmpMaster/', EmpMaster,name='EmpMaster'),
 ]

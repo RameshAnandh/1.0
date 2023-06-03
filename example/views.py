@@ -58,6 +58,23 @@ def login_auth(request):
       data['msg'] = str(e)
     return JsonResponse(data)
 
+@csrf_exempt
+def post_query(request):
+  data = {}
+  if request.method == "POST":
+    name = request.POST['name']
+    Mobile = request.POST['Mobile']
+    Query = request.POST['Query']
+    try:
+      results = custom_sql('default',"INSERT INTO tblUserQuery values('"+name+"','"+Mobile+"','"+Query+"');")
+      if len(results) >0:
+        data['msg']='Success'
+      else:
+        raise Exception("Failed!")
+    except Exception as e:
+      data['msg'] = str(e)
+    return JsonResponse(data)
+
 """@csrf_exempt
 def chat_gpt_functions(request):
   data = {}
