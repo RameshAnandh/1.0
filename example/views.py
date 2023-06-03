@@ -66,7 +66,7 @@ def post_query(request):
     Mobile = request.POST['Mobile']
     Query = request.POST['Query']
     try:
-      results = insert_sql('default',"INSERT INTO tblUserQuery values('"+name+"','"+Mobile+"','"+Query+"');")
+      results = insert_sql('default',"INSERT INTO `tblUserQuery` values('"+name+"','"+Mobile+"','"+Query+"');")
       if results >0:
         data['msg']='Success'
       else:
