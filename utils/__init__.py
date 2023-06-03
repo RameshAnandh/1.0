@@ -1,6 +1,10 @@
 from django.db import connections
 
 
+def insert_sql(conn, query):
+    with connections[conn].cursor() as cursor:
+        cursor.execute(query)
+        return cursor.rowcount
 def custom_sql(conn, query):
     with connections[conn].cursor() as cursor:
         cursor.execute(query)

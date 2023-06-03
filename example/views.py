@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 #from datatable.views import ServerSideDatatableViewSPP
 
-from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results
+from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results,insert_sql
 
 from example.models import DBTEST_MODEL
 
@@ -66,8 +66,8 @@ def post_query(request):
     Mobile = request.POST['Mobile']
     Query = request.POST['Query']
     try:
-      results = custom_sql('default',"INSERT INTO tblUserQuery values('"+name+"','"+Mobile+"','"+Query+"');")
-      if len(results) >0:
+      results = insert_sql('default',"INSERT INTO tblUserQuery values('"+name+"','"+Mobile+"','"+Query+"');")
+      if results >0:
         data['msg']='Success'
       else:
         raise Exception("Failed!")
