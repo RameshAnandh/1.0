@@ -83,7 +83,7 @@ def login_auth(request):
       data['msg'] = str(e)
       context = {'error': 'The username and password combination is incorrect'
                  ,'errMsg':str(e)}
-    return render(request, 'templates/Login.html', context)
+    return render(request, '/login/', context)
     #return JsonResponse(data)
 
 @csrf_exempt
