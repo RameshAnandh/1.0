@@ -35,6 +35,7 @@
 <!--                    <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>-->
                     <span class="pull-left"><a type="submit" id="loginlink" onclick="submit()" class="btn btn-success">Login</a></span>
                 </div>
+                <input type="hidden" name="valuenext" value="adminHome.html"/>
             </form>
 <!--            <form id="recoverform" action="#" class="form-vertical">-->
 <!--				<p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a password.</p>-->
@@ -60,21 +61,12 @@
                     data:{
                         name:$('#dom_username').val(),
                         Mobile:$('#dom_password').val(),
+                        valuenext:$('#valuenext').val(),
                         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
                     },
                     success:function(data){
                         console.log(data.msg);
-                        if(data.msg!=='No Such user!'){
-                            $.ajax({
-                                type:'GET',
-                                url:'/example/',
-                                error: function (jqXHR, exception) {
-                                    console.log(jqXHR);
-                                }
-                            });
-                        }
-                        else
-                            alert(data.msg);
+                        alert(data.msg);
                     },
                     error: function (jqXHR, exception) {
                         console.log(jqXHR);

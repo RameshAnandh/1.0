@@ -71,15 +71,20 @@ def login_auth(request):
   if request.method == "POST":
     name = request.POST['name']
     Mobile = request.POST['Mobile']
+    valuenext = request.POST['valuenext']
     try:
       results = custom_sql('default',"SELECT 1 FROM tblLogin WHERE txtuname = '"+name+"' AND txtpwd ='"+Mobile+"';")
       if len(results) >0:
-        data['msg']='Success'
+        #data['msg']='Success'
+        return redirect(valuenext)
       else:
         raise Exception("No Such user!")
     except Exception as e:
       data['msg'] = str(e)
-    return JsonResponse(data)
+      context = {'error': 'The username and password combination is incorrect'
+                 ,'errMsg':str(e)}
+    return render(request, 'templates/Login.html', context)
+    #return JsonResponse(data)
 
 @csrf_exempt
 def post_query(request):
