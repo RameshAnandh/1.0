@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<table id="mytable">
+     <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Query</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Query</th>
+            </tr>
+        </tfoot>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#mytable').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url':'/get_user_query/',
+            },
+            'columns': [
+                { data: 'Name' },
+                { data: 'Mobile' },
+                { data: 'Query' }
+            ],
+             lengthMenu: [
+            [5,10, 25, 50, -1],
+            [5,10, 25, 50, 'All'],
+        ],
+        });
+    });
+</script>
+</body>
+</html>

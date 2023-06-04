@@ -9,7 +9,7 @@ from django.template import loader
 from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results,insert_sql
 
 from example.models import DBTEST_MODEL
-
+import json
 #import cv2
 #import numpy as np
 #from matplotlib import pyplot as plt
@@ -23,6 +23,13 @@ import requests
 def example(request):
   template = loader.get_template('home.html')
   return HttpResponse(template.render())
+
+def adminHome(request):
+  template = loader.get_template('adminHome.html')
+  context = {
+    'title': 'Mano Driving School',
+  }
+  return HttpResponse(template.render(context,request))
 
 def login(request):
   template = loader.get_template('Login.html')
@@ -41,6 +48,22 @@ def contact(request):
 def EmpMaster(request):
   template = loader.get_template('EmployeeMaster.html')
   return HttpResponse(template.render())
+
+@csrf_exempt
+def get_user_query(request):
+  data = []
+  if request.method == "POST":
+    try:
+      results = custom_sql('default',"select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery;")
+      if len(results) >0:
+        records = {
+          'aaData': results,
+        }
+      else:
+        raise Exception("No Data!")
+    except Exception as e:
+      data['msg'] = str(e)
+    return HttpResponse(json.dumps(records), content_type='application/json')
 
 @csrf_exempt
 def login_auth(request):

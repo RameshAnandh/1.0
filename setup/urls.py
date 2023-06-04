@@ -20,10 +20,11 @@ from example.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('example/', example,name='example_home'),
-    # path('chat_gpt_functions/', chat_gpt_functions,name='chat_gpt_functions'),
     path('login/', login,name='login'),
     path('login_auth/', login_auth,name='login_auth'),
     path('contact/', contact,name='contact'),
     path('post_query/', post_query,name='post_query'),
-    # path('EmpMaster/', EmpMaster,name='EmpMaster'),
+    path('adminHome/', adminHome,name='adminHome'),
+    path('get_user_query/', get_user_query,name='get_user_query'),
+
 ]
