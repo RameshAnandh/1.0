@@ -54,9 +54,17 @@ def get_user_query(request):
   data = []
   if request.method == "POST":
     try:
-      results = custom_sql('default',"select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery;")
-      if len(results) >0:
+      length = request.POST['length']
+      start = request.POST['start']
+      offset=0
+      if(int(start)>0):
+        offset=start
+      results_info = custom_sql('default',"select count(*) as COUNT from tblUserQuery;")
+      results = custom_sql('default',"select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery LIMIT "+str(offset)+","+str(length)+";")
+      if len(results_info) >0:
         records = {
+          "recordsTotal":results_info[0]['COUNT'],
+          "recordsFiltered":results_info[0]['COUNT'],
           'aaData': results,
         }
       else:
@@ -102,74 +110,3 @@ def post_query(request):
     except Exception as e:
       data['msg'] = str(e)
     return JsonResponse(data)
-
-"""@csrf_exempt
-def chat_gpt_functions(request):
-  data = {}
-  if request.method == "POST":
-    imageQuery = request.POST['imageQuery']
-    imageSize = request.POST['imageSize']
-    queryType=request.POST['queryType']
-    noofOutput = request.POST['noofOutput']
-    try:
-        openai.api_key = "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"
-        #Feature 1
-        # response = openai.Completion.create(
-        #     model="text-davinci-003",
-        #     prompt="What is your age?",
-        #     temperature=0.9,
-        #     max_tokens=150,
-        #     top_p=1,
-        #     frequency_penalty=0.0,
-        #     presence_penalty=0.6,
-        #     stop=[" Human:", " AI:"]
-        # )
-        #print(response)
-
-        if(queryType=='Prompt'):
-            # Feature 2
-            response = openai.Image.create(
-                prompt=imageQuery,
-                n=int(noofOutput),
-                size=imageSize
-            )
-            image_url = response['data'][0]['url']
-            # print(image_url)
-            return JsonResponse(response)
-
-        # Feature 3
-        # response = openai.Image.create_edit(
-        #     image=open("images/sun.png", "rb"),
-        #     mask=open("images/mask.png", "rb"),
-        #     prompt=imageQuery,#A sunlit indoor lounge area with a pool containing a flamingo
-        #     n=1,
-        #     size=imageSize
-        # )
-        # image_url = response['data'][0]['url']
-        # return JsonResponse(response)
-
-        elif (queryType == 'Variation'):
-            # Feature 4
-            saveVariation = request.POST['saveVariation']
-            imagePath = 'images/' + imageQuery
-
-            # tinify.key = "lqZRXCTD7WTLTzyv07CNcR8qgtclYw6x"
-            # source = tinify.from_file(imagePath)
-            # source.to_file('images/'+"optimized.png")
-            # imageQuery="optimized.png"
-            # imagePath = 'images/' + imageQuery
-            response = openai.Image.create_variation(
-                image=open(imagePath, "rb"),
-                n=noofOutput,
-                size=imageSize
-            )
-            image_url = response['data'][0]['url']
-            if(saveVariation=="saveVariation"):
-                response_data = requests.get(image_url)
-                with open('images/'+"latestVariation.png", "wb") as f:
-                    f.write(response_data.content)
-            return JsonResponse(response)
-    except Exception as e:
-      data['error_message'] = str(e)
-      return JsonResponse(data)
-"""
