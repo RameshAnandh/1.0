@@ -41,54 +41,6 @@
     <a type="submit" id="loginlink" onclick="submit()" class="btn btn-success">Submit</a>
 </form>
 <script src="{% static '/assets_libs_jquery_dist/jquery.min.js' %}"></script>
-        <script>
-            function submit(){
-                let mobile=$('#Mobile').val();
-                let re = /^[0-9]{10}$/;
-                if (re.test(mobile)) {
-                    if($('#name').val().length!=0 && $('#Mobile').val().length!=0 && $('#Query').val().length!=0)
-                    {
-                        $.ajax({
-                            type:'POST',
-                            url:'/post_query/',
-                            data:{
-                                name:$('#name').val(),
-                                Mobile:$('#Mobile').val(),
-                                Query:$('#Query').val(),
-                                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-                            },
-                            success:function(data){
-                                console.log(data.msg);
-                                alert(data.msg);
-                            },
-                            error: function (jqXHR, exception) {
-                                console.log(jqXHR);
-                            }
-                        });
-                    }
-                    else{
-                        if($('#name').val().length==0)
-                        {
-                            alert("Provide Name");
-                            focus('#name');
-                        }
-                        else if($('#Mobile').val().length==0)
-                        {
-                            alert("Provide Mobile");
-                            focus('#Mobile');
-                        }
-                        else if($('#Query').val().length==0)
-                        {
-                            alert("Provide Query");
-                            focus('#Query');
-                        }
-                    }
-                }
-                else {
-                     alert("Provide correct Mobile");
-                     focus('#Mobile');
-                }
-            }
-        </script>
+<script src="{% static '/assets_libs_jquery_dist/myjs.js' %}"></script>
 </body>
 </html>
