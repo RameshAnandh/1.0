@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-@lxnne^3-t#x6=q3eb++#fw+#x4+g7^gsry(cgcdv9f1dzdyq)
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = [ 'rameshanandh.pythonanywhere.com','127.0.0.1' ]
+ALLOWED_HOSTS = [ 'rameshanandh.pythonanywhere.com','127.0.0.1','www.arsnellai.shop' ]
 
 LOGIN_URL='/login/'
 # Application definition
