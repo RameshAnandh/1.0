@@ -26,5 +26,5 @@ urlpatterns = [
     path('post_query/', post_query,name='post_query'),
     path('adminHome/', adminHome,name='adminHome'),
     path('get_user_query/', get_user_query,name='get_user_query'),
-
+    path('', contact,name='contact'),
 ]
