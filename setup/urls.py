@@ -27,4 +27,5 @@ urlpatterns = [
     path('adminHome/', adminHome,name='adminHome'),
     path('get_user_query/', get_user_query,name='get_user_query'),
     path('', contact,name='contact'),
+    path('logout/', logout_view,name='logout'),
 ]

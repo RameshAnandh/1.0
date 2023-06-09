@@ -7,7 +7,8 @@ from django.template import loader
 #from datatable.views import ServerSideDatatableViewSPP
 
 from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results,insert_sql
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login,logout
+
 from example.models import DBTEST_MODEL
 import json
 #import cv2
@@ -19,6 +20,9 @@ import json
 import requests
 
 #import tinify
+def logout_view(request):
+  logout(request)
+  return redirect('/')
 
 def example(request):
   template = loader.get_template('home.html')
