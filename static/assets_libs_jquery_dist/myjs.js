@@ -18,6 +18,9 @@ function submit(){
                 success:function(data){
                     console.log(data.msg);
                     alert(data.msg);
+                    document.getElementById('name').value = '';
+                    document.getElementById('Mobile').value = '';
+                    document.getElementById('Query').value = '';
                 },
                 error: function (jqXHR, exception) {
                     console.log(jqXHR);
