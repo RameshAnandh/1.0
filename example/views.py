@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse, HttpResponse,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.template import loader
 #from datatable.views import ServerSideDatatableViewSPP
@@ -24,6 +24,7 @@ def example(request):
   template = loader.get_template('home.html')
   return HttpResponse(template.render())
 
+@login_required
 def adminHome(request):
   template = loader.get_template('adminHome.html')
   context = {

@@ -28,7 +28,7 @@ DEBUG = True
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = [ 'rameshanandh.pythonanywhere.com','127.0.0.1' ]
 
-
+LOGIN_URL='/login/'
 # Application definition
 
 INSTALLED_APPS = [
