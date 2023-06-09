@@ -145,10 +145,10 @@
                 <div class="shape"></div>
                 <div class="shape"></div>
             </div>
-            <form id="loginform" class="form-vertical">
-                <div class="control-group normal_text"> <h3>
-<!--                    <img src="{% static '/images/alogo.png' %}" alt="Logo" width="178px" height="50px" />-->
-                    <h3>Admin Login</h3>
+            <form id="loginform" class="form-vertical" method="post" action="/login_auth/">
+                 {% csrf_token %}
+                <div class="control-group normal_text">
+                   <h3>Admin Login</h3>
                 </h3></div>
                 <div class="control-group">
                     <div class="controls">
@@ -175,48 +175,49 @@
                 <br/>
                 <div class="form-actions">
                    <span class="pull-left">
-                       <a type="submit" id="loginlink" onclick="submit()">Log In</a>
+<!--                       <a type="submit" id="loginlink" onclick="submit()">Log In</a>-->
+                       <button type="submit" id="loginlink">Log In</button>
                    </span>
                 </div>
                 <input type="hidden" name="valuenext" id="valuenext" value="/adminHome/"/>
             </form>
         </div>
         <script src="{% static '/assets_libs_jquery_dist/jquery.min.js' %}"></script>
-        <script>
-            function submit(){
-                if($('#dom_username').val().length!=0 && $('#dom_password').val().length!=0)
-                {
-                $.ajax({
-                    type:'POST',
-                    url:'/login_auth/',
-                    data:{
-                        name:$('#dom_username').val(),
-                        Mobile:$('#dom_password').val(),
-                        valuenext:$('#valuenext').val(),
-                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-                    },
-                    success:function(data){
-                        console.log(data);
-                        alert(data);
-                    },
-                    error: function (jqXHR, exception) {
-                        console.log(jqXHR);
-                    }
-                });
-                }
-                else{
-                    if($('#dom_username').val().length==0)
-                    {
-                        alert("Provide Username");
-                        focus('#dom_username');
-                    }
-                else if($('#dom_password').val().length==0)
-                    {
-                        alert("Provide Password");
-                        focus('#dom_password');
-                    }
-                }
-            }
-        </script>
+<!--        <script>-->
+<!--            function submit(){-->
+<!--                if($('#dom_username').val().length!=0 && $('#dom_password').val().length!=0)-->
+<!--                {-->
+<!--                $.ajax({-->
+<!--                    type:'POST',-->
+<!--                    url:'/login_auth/',-->
+<!--                    data:{-->
+<!--                        name:$('#dom_username').val(),-->
+<!--                        Mobile:$('#dom_password').val(),-->
+<!--                        valuenext:$('#valuenext').val(),-->
+<!--                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()-->
+<!--                    },-->
+<!--                    success:function(data){-->
+<!--                        console.log(data);-->
+<!--                        alert(data);-->
+<!--                    },-->
+<!--                    error: function (jqXHR, exception) {-->
+<!--                        console.log(jqXHR);-->
+<!--                    }-->
+<!--                });-->
+<!--                }-->
+<!--                else{-->
+<!--                    if($('#dom_username').val().length==0)-->
+<!--                    {-->
+<!--                        alert("Provide Username");-->
+<!--                        focus('#dom_username');-->
+<!--                    }-->
+<!--                else if($('#dom_password').val().length==0)-->
+<!--                    {-->
+<!--                        alert("Provide Password");-->
+<!--                        focus('#dom_password');-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        </script>-->
     </body>
 </html>

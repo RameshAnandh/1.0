@@ -7,7 +7,7 @@ from django.template import loader
 #from datatable.views import ServerSideDatatableViewSPP
 
 from utils import custom_sql, custom_procedure, movecol, custom_procedure_multiple_results,insert_sql
-
+from django.contrib.auth import authenticate, login as auth_login
 from example.models import DBTEST_MODEL
 import json
 #import cv2
@@ -26,20 +26,22 @@ def example(request):
 
 @login_required
 def adminHome(request):
-  template = loader.get_template('adminHome.html')
-  context = {
-    'title': 'Mano Driving School',
-    'page': 'Admin Home'
-  }
-  return HttpResponse(template.render(context,request))
+  if request.method == "GET":
+    template = loader.get_template('adminHome.html')
+    context = {
+      'title': 'Mano Driving School',
+      'page': 'Admin Home'
+    }
+    return HttpResponse(template.render(context,request))
 
 def login(request):
-  template = loader.get_template('Login.html')
-  context = {
-    'title': 'Mano Driving School',
-    'page': 'Login'
-  }
-  return HttpResponse(template.render(context,request))
+  if request.method=='GET':
+    template = loader.get_template('Login.html')
+    context = {
+      'title': 'Mano Driving School',
+      'page': 'Login'
+    }
+    return HttpResponse(template.render(context,request))
 
 def contact(request):
   template = loader.get_template('contact.html')
@@ -81,22 +83,22 @@ def get_user_query(request):
 def login_auth(request):
   data = {}
   if request.method == "POST":
-    name = request.POST['name']
-    Mobile = request.POST['Mobile']
-    valuenext = request.POST['valuenext']
     try:
-      results = custom_sql('default',"SELECT 1 FROM tblLogin WHERE txtuname = '"+name+"' AND txtpwd ='"+Mobile+"';")
-      if len(results) >0:
-        #data['msg']='Success'
-        return redirect(valuenext)
+      name = request.POST['dom_username']
+      Mobile = request.POST['dom_password']
+      valuenext = request.POST['valuenext']
+      user = authenticate(request, username=name, password=Mobile)
+      if user is not None:
+        auth_login(request, user)
+        return redirect('/adminHome/')
       else:
         raise Exception("No Such user!")
     except Exception as e:
       data['msg'] = str(e)
-      context = {'error': 'The username and password combination is incorrect'
+      """context = {'error': 'The username and password combination is incorrect'
                  ,'errMsg':str(e)}
-    return render(request, '/login/', context)
-    #return JsonResponse(data)
+      return render(request, '/login/', context)
+      """
 
 @csrf_exempt
 def post_query(request):
