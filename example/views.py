@@ -92,7 +92,7 @@ def login_auth(request):
         auth_login(request, user)
         return redirect('/adminHome/')
       else:
-        raise Exception("No Such user!")
+        raise redirect('/')
     except Exception as e:
       data['msg'] = str(e)
       """context = {'error': 'The username and password combination is incorrect'
