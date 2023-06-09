@@ -1,16 +1,7 @@
-<!DOCTYPE html>
+{% extends 'master.html' %}
 {% load static %}
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-        <title>{{title}}</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-        <!--Stylesheet-->
-        <style media="screen">
+{% block style %}
+<style media="screen">
         *,
         *:before,
         *:after{
@@ -24,7 +15,7 @@
         .background{
         width: 430px;
         height: 520px;
-        position: absolute;
+<!--        position: absolute;-->
         transform: translate(-50%,-50%);
         left: 50%;
         top: 50%;
@@ -32,7 +23,7 @@
         .background .shape{
         height: 200px;
         width: 200px;
-        position: absolute;
+<!--        position: absolute;-->
         border-radius: 50%;
         }
         .shape:first-child{
@@ -56,8 +47,8 @@
         height: 520px;
         width: 400px;
         background-color: rgba(255,255,255,0.13);
-        position: absolute;
-        transform: translate(-50%,-50%);
+        position: relative;
+        transform: translate(-50%,-0%);
         top: 50%;
         left: 50%;
         border-radius: 10px;
@@ -103,7 +94,7 @@
         button,#loginlink{
         margin-top: 50px;
         width: 100%;
-        color: #ffffff;
+        color: #000000;
         padding: 15px 0;
         font-size: 18px;
         font-weight: 600;
@@ -133,91 +124,56 @@
         .social i{
         margin-right: 4px;
         }
-
     </style>
-    </head>
-    <body>        
-        <div id="loginbox">  
-            <div id="error" class='normal_text'>
-                <h3>{{error}}</h3>
-            </div>
-            <div class="background">
-                <div class="shape"></div>
-                <div class="shape"></div>
-            </div>
-            <form id="loginform" class="form-vertical" method="post" action="/login_auth/">
-                 {% csrf_token %}
-                <div class="control-group normal_text">
-                   <h3>Admin Login</h3>
-                </h3></div>
-                <div class="control-group">
-                    <div class="controls">
-                        <div class="main_input_box">
-                            <span class="add-on bg_lg">
-                                <i class="icon-user"> </i>
-                            </span>
-                            <label for="dom_username">Username</label>
-                            <input type="text" placeholder="Username" class="form-control" name="dom_username" id="dom_username"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <div class="main_input_box">
-                            <span class="add-on bg_ly">
-                                <i class="icon-lock"></i>
-                            </span>
-                            <label for="dom_password">Password</label>
-                            <input type="password" placeholder="Password" class="form-control" id="dom_password" name="dom_password" />
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="form-actions">
-                   <span class="pull-left">
-<!--                       <a type="submit" id="loginlink" onclick="submit()">Log In</a>-->
-                       <button type="submit" id="loginlink">Log In</button>
-                   </span>
-                </div>
-                <input type="hidden" name="valuenext" id="valuenext" value="/adminHome/"/>
-            </form>
+{% endblock %}
+
+{% block content %}
+    <div id="loginbox">
+        <div id="error" class='normal_text'>
+            <h3>{{error}}</h3>
         </div>
-        <script src="{% static '/assets_libs_jquery_dist/jquery.min.js' %}"></script>
-<!--        <script>-->
-<!--            function submit(){-->
-<!--                if($('#dom_username').val().length!=0 && $('#dom_password').val().length!=0)-->
-<!--                {-->
-<!--                $.ajax({-->
-<!--                    type:'POST',-->
-<!--                    url:'/login_auth/',-->
-<!--                    data:{-->
-<!--                        name:$('#dom_username').val(),-->
-<!--                        Mobile:$('#dom_password').val(),-->
-<!--                        valuenext:$('#valuenext').val(),-->
-<!--                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()-->
-<!--                    },-->
-<!--                    success:function(data){-->
-<!--                        console.log(data);-->
-<!--                        alert(data);-->
-<!--                    },-->
-<!--                    error: function (jqXHR, exception) {-->
-<!--                        console.log(jqXHR);-->
-<!--                    }-->
-<!--                });-->
-<!--                }-->
-<!--                else{-->
-<!--                    if($('#dom_username').val().length==0)-->
-<!--                    {-->
-<!--                        alert("Provide Username");-->
-<!--                        focus('#dom_username');-->
-<!--                    }-->
-<!--                else if($('#dom_password').val().length==0)-->
-<!--                    {-->
-<!--                        alert("Provide Password");-->
-<!--                        focus('#dom_password');-->
-<!--                    }-->
-<!--                }-->
-<!--            }-->
-<!--        </script>-->
-    </body>
-</html>
+<!--        <div class="background">-->
+<!--            <div class="shape"></div>-->
+<!--            <div class="shape"></div>-->
+<!--        </div>-->
+        <form id="loginform" class="form-vertical" method="post" action="/login_auth/">
+             {% csrf_token %}
+            <div class="control-group normal_text">
+               <h3>Admin Login</h3>
+            </h3></div>
+            <div class="control-group">
+                <div class="controls">
+                    <div class="main_input_box">
+                        <span class="add-on bg_lg">
+                            <i class="icon-user"> </i>
+                        </span>
+                        <label for="dom_username">Username</label>
+                        <input type="text" placeholder="Username" class="form-control" name="dom_username" id="dom_username"/>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <div class="main_input_box">
+                        <span class="add-on bg_ly">
+                            <i class="icon-lock"></i>
+                        </span>
+                        <label for="dom_password">Password</label>
+                        <input type="password" placeholder="Password" class="form-control" id="dom_password" name="dom_password" />
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="form-actions">
+               <span class="pull-left">
+<!--                       <a type="submit" id="loginlink" onclick="submit()">Log In</a>-->
+                   <button type="submit" id="loginlink">Log In</button>
+               </span>
+            </div>
+            <input type="hidden" name="valuenext" id="valuenext" value="/adminHome/"/>
+        </form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static '/assets_libs_jquery_dist/myjs.js' %}"></script>
+{% endblock %}
