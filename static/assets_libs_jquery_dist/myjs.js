@@ -37,7 +37,7 @@ function submit(){
             }
             else if($('#Query').val().length==0)
             {
-                alert("Provide Query");
+                alert("Provide Message");
                 focus('#Query');
             }
         }

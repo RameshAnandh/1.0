@@ -1,14 +1,9 @@
-<!DOCTYPE html>
+{% extends 'master.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
+{% block style %}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-</head>
-<body>
+{% endblock %}
+{% block content %}
 <table id="mytable">
      <thead>
             <tr>
@@ -19,23 +14,27 @@
         </thead>
         <tbody>
         </tbody>
-<!--        <tfoot>-->
-<!--            <tr>-->
-<!--                <th>Name</th>-->
-<!--                <th>Mobile</th>-->
-<!--                <th>Query</th>-->
-<!--            </tr>-->
-<!--        </tfoot>-->
 </table>
-
+{% endblock %}
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#mytable').DataTable({
+        let table=$('#mytable')
+        .on( 'page.dt', function (e) {
+        var info = table.page.info();
+        } )
+        .DataTable({
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
             'ajax': {
                 'url':'/get_user_query/',
+                 data:{
+                        length:$('#length').val(),
+                        page:$('#page').val(),
+                    },
             },
             'columns': [
                 { data: 'Name' },
@@ -47,7 +46,19 @@
             [5,10, 25, 50, 'All'],
         ],
         });
+
+        $('.dataTables_filter input').unbind().keyup(function(e) {
+            var value = $(this).val();
+            if (value.length>3) {
+                alert(value);
+                table.rows().search(value).draw();
+                //table.rows().invalidate().draw()
+            } else {
+                //optional, reset the search if the phrase
+                //is less then 3 characters long
+                table.search('').draw();
+            }
+        });
     });
 </script>
-</body>
-</html>
+{% endblock %}

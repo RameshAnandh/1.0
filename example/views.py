@@ -28,6 +28,7 @@ def adminHome(request):
   template = loader.get_template('adminHome.html')
   context = {
     'title': 'Mano Driving School',
+    'page': 'Admin Home'
   }
   return HttpResponse(template.render(context,request))
 
@@ -35,6 +36,7 @@ def login(request):
   template = loader.get_template('Login.html')
   context = {
     'title': 'Mano Driving School',
+    'page': 'Login'
   }
   return HttpResponse(template.render(context,request))
 
@@ -42,6 +44,7 @@ def contact(request):
   template = loader.get_template('contact.html')
   context = {
     'title': 'Mano Driving School',
+    'page':'Contact Us'
   }
   return HttpResponse(template.render(context,request))
 
