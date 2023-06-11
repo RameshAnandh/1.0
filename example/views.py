@@ -70,7 +70,15 @@ def get_user_query(request):
       if(int(start)>0):
         offset=start
       results_info = custom_sql('default',"select count(*) as COUNT from tblUserQuery;")
-      results = custom_sql('default',"select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery LIMIT "+str(offset)+","+str(length)+";")
+      main_sql = ""
+      ord_sql=int(request.POST['order[0][column]'])+1
+      if(request.POST['search[value]']!=''):
+        search_val=request.POST['search[value]']
+        where_sql="where txtName like '%"+search_val+"%' or txtMobile like '%"+search_val+"%'  or txtQuery like '%"+search_val+"%' "
+        main_sql="select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery "+where_sql+" order by "+str(ord_sql)+" "+request.POST['order[0][dir]']+" LIMIT "+str(offset)+","+str(length)+";"
+      else:
+        main_sql="select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery order by "+str(ord_sql)+" "+request.POST['order[0][dir]']+" LIMIT "+str(offset)+","+str(length)+";"
+      results = custom_sql('default',main_sql)
       if len(results_info) >0:
         records = {
           "recordsTotal":results_info[0]['COUNT'],
