@@ -39,7 +39,15 @@
             'columns': [
                 { data: 'Name' },
                 { data: 'Mobile' },
-                { data: 'Query' }
+                { data: 'Query' },
+                { data: 'id' }
+            ],
+            columnDefs: [
+                {
+                    target: 3,
+                    visible: false,
+                    searchable: false,
+                },
             ],
              lengthMenu: [
             [5,10, 25, 50, -1],

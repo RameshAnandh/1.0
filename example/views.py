@@ -75,10 +75,10 @@ def get_user_query(request):
       if(request.POST['search[value]']!=''):
         search_val=request.POST['search[value]']
         where_sql="where txtName like '%"+search_val+"%' or txtMobile like '%"+search_val+"%'  or txtQuery like '%"+search_val+"%' "
-        main_sql="select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery "+where_sql+" order by query_date desc, "+str(ord_sql)+" "+request.POST['order[0][dir]']+" LIMIT "+str(offset)+","+str(length)+";"
+        main_sql="select txtName as Name,txtMobile as Mobile,txtQuery as Query,id from tblUserQuery "+where_sql+" order by query_date desc, "+str(ord_sql)+" "+request.POST['order[0][dir]']+" LIMIT "+str(offset)+","+str(length)+";"
         result_info_sql="select count(*) as COUNT from tblUserQuery "+where_sql+";"
       else:
-        main_sql="select txtName as Name,txtMobile as Mobile,txtQuery as Query from tblUserQuery order by query_date desc, "+str(ord_sql)+" "+request.POST['order[0][dir]']+" LIMIT "+str(offset)+","+str(length)+";"
+        main_sql="select txtName as Name,txtMobile as Mobile,txtQuery as Query,id from tblUserQuery order by query_date desc, "+str(ord_sql)+" "+request.POST['order[0][dir]']+" LIMIT "+str(offset)+","+str(length)+";"
         result_info_sql = "select count(*) as COUNT from tblUserQuery;"
 
       results = custom_sql('default',main_sql)
