@@ -32,19 +32,51 @@ def example(request):
 def adminHome(request):
   if request.method == "GET":
     template = loader.get_template('adminHome.html')
-    context = {
-      'title': 'Mano Driving School',
-      'page': 'Admin Home'
-    }
+    main_sql = "SELECT * FROM tblClientDetails where active=1;"
+    results = custom_sql('default', main_sql)
+    if len(results) > 0:
+      cname = results[0]['txtClientname']
+      mobile1 = results[0]['txtMobile1']
+      mobile2 = results[0]['txtMobile2']
+      Address = results[0]['txtAddress']
+      emailid = results[0]['txtEmailID']
+      context = {
+        'title': cname,
+        'page': 'Admin Home',
+        'mobile1': mobile1,
+        'mobile2': mobile2,
+        'address': Address,
+        'email': emailid
+      }
+    # context = {
+    #   'title': 'Mano Driving School',
+    #   'page': 'Admin Home'
+    # }
     return HttpResponse(template.render(context,request))
 
 def login(request):
   if request.method=='GET':
     template = loader.get_template('Login.html')
-    context = {
-      'title': 'Mano Driving School',
-      'page': 'Login',
-    }
+    main_sql = "SELECT * FROM tblClientDetails where active=1;"
+    results = custom_sql('default', main_sql)
+    if len(results) > 0:
+      cname = results[0]['txtClientname']
+      mobile1 = results[0]['txtMobile1']
+      mobile2 = results[0]['txtMobile2']
+      Address = results[0]['txtAddress']
+      emailid = results[0]['txtEmailID']
+      context = {
+        'title': cname,
+        'page': 'Login',
+        'mobile1': mobile1,
+        'mobile2': mobile2,
+        'address': Address,
+        'email': emailid
+      }
+    # context = {
+    #   'title': 'Mano Driving School',
+    #   'page': 'Login',
+    # }
     return HttpResponse(template.render(context,request))
 
 def contact(request):

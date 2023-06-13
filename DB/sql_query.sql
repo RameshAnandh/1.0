@@ -22,3 +22,6 @@ INSERT INTO tblClientDetails(txtClientname,txtMobile1,txtMobile2,txtAddress,txtE
 VALUES('TEST DRIVING SCHOOL','98421XXXXX','94866XXXXX','Test Address,Palayamkottai,Tirunelveli, Tamil Nadu 627007','testmail@gmail.com',0);
 
 SELECT * FROM tblClientDetails;
+
+UPDATE tblClientDetails SET active=0 WHERE txtClientname='MANO DRIVING SCHOOL';
+UPDATE tblClientDetails SET active=1 WHERE txtClientname='TEST DRIVING SCHOOL';
