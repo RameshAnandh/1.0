@@ -43,16 +43,32 @@ def login(request):
     template = loader.get_template('Login.html')
     context = {
       'title': 'Mano Driving School',
-      'page': 'Login'
+      'page': 'Login',
     }
     return HttpResponse(template.render(context,request))
 
 def contact(request):
   template = loader.get_template('contact.html')
-  context = {
-    'title': 'Mano Driving School',
-    'page':'Contact Us'
-  }
+  main_sql = "SELECT * FROM tblClientDetails where active=1;"
+  results = custom_sql('default', main_sql)
+  if len(results) > 0:
+    cname=results[0]['txtClientname']
+    mobile1=results[0]['txtMobile1']
+    mobile2 = results[0]['txtMobile2']
+    Address = results[0]['txtAddress']
+    emailid = results[0]['txtEmailID']
+    context = {
+      'title': cname,
+      'page': 'Contact Us',
+      'mobile1':mobile1,
+      'mobile2': mobile2,
+      'address':Address,
+      'email':emailid
+    }
+  # context = {
+  #   'title': 'Mano Driving School',
+  #   'page':'Contact Us'
+  # }
   return HttpResponse(template.render(context,request))
 
 def EmpMaster(request):
@@ -71,6 +87,8 @@ def get_user_query(request):
         offset=start
       result_info_sql=""
       main_sql = ""
+      #delete_sql="DELETE FROM tblUserQuery where id="
+      #results = custom_sql('default', delete_sql)
       ord_sql=int(request.POST['order[0][column]'])+1
       if(request.POST['search[value]']!=''):
         search_val=request.POST['search[value]']
